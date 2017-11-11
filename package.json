@@ -1,0 +1,18 @@
+{
+  "name": "make-your-own-discord-bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^8.0.47",
+    "alsatian": "^2.0.0",
+    "discord.js": "^11.2.1",
+    "tap-bark": "^1.0.0",
+    "typescript": "^2.5.3"
+  },
+  "scripts": {
+    "build": "./node_modules/.bin/tsc",
+    "start": "yarn run build && node build/main.js",
+    "test": "yarn run build && node build/test/runTests.js"
+  }
+}
