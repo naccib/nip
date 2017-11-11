@@ -69,7 +69,7 @@ export class MessageParser
                                     .filter(identifier => this.source.startsWith(identifier))[0];
         
         // Don't even try to parse the message if we don't find a prefix.
-        if(!foundPrefix)
+        if(foundPrefix)
         {
             this.source = this.source.substring(foundPrefix.length, this.source.length - foundPrefix.length + 1);
             this.addToken(TokenType.Prefix, foundPrefix);
@@ -87,16 +87,16 @@ export class MessageParser
 
         switch(c)
         {
-            case ' ':
-                this.addToken(TokenType.Space, undefined);
-                break;
-
             case this.parsingOptions.ChainLexeme:
                 this.addToken(TokenType.Chain, undefined);
                 break;
 
             case '"':
                 this.quotedString();
+                break;
+
+            case ' ':
+            case '\t':
                 break;
 
             default:

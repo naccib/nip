@@ -13,7 +13,6 @@ export type TokenValue = string
 export enum TokenType
 {
     String,
-    Space,
     Chain,
     Prefix
 }

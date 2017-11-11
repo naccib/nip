@@ -18,6 +18,7 @@ const createMessage = (content: string) : MessageLike =>
  * Helper prefix token.
  */
 const prefixToken = new Token(TokenType.Prefix, '!');
+const stringToken = (value: string) : Token => new Token(TokenType.String, value);
 
 @TestFixture("Parsing Test")
 export class ExampleTestFixture {
@@ -32,6 +33,7 @@ export class ExampleTestFixture {
   @Test("Test valid messages.")
   @TestCase(createMessage('!'), [prefixToken])
   @TestCase(createMessage('!parser'), [prefixToken, new Token(TokenType.String, 'parser')])
+  @TestCase(createMessage('!big_command_name argument1 "argument 2" 92.2'), [prefixToken, stringToken('big_command_name'), stringToken('argument1'), stringToken('argument 2'), stringToken('92.2')])
   public validMessages(message: MessageLike, expected: Array<Token>) {    
     Expect(new MessageParser(message).tokens).toEqual(expected);
   }
