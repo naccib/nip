@@ -23,6 +23,9 @@ export class MessageParser
         return this.current >= this.source.length;
     }
 
+    /**
+     * Gets the result of a parsing.
+     */
     get tokens() : Array<Token>
     {
         return this._tokens;
@@ -42,6 +45,9 @@ export class MessageParser
         this.parseMessage();
     }
 
+    /**
+     * Parses `this.message`.
+     */
     private parseMessage() : void
     {
         if(!this.removePrefix())
@@ -54,17 +60,27 @@ export class MessageParser
         }
     }
 
+    /**
+     * Removes the prefix and returns it.
+     */
     private removePrefix() : string
     {
         const foundPrefix = this.parsingOptions.Indentifiers
                                     .filter(identifier => this.source.startsWith(identifier))[0];
-            
-        this.source = this.source.substring(foundPrefix.length, this.source.length - foundPrefix.length + 1);
-        this.addToken(TokenType.Prefix, foundPrefix);
+        
+        // Don't even try to parse the message if we don't find a prefix.
+        if(!foundPrefix)
+        {
+            this.source = this.source.substring(foundPrefix.length, this.source.length - foundPrefix.length + 1);
+            this.addToken(TokenType.Prefix, foundPrefix);
+        }
 
         return foundPrefix;
     }
 
+    /**
+     * Scans the next token and adds it to the list.
+     */
     private scanToken() : void
     {
         const c = this.advance();
@@ -109,6 +125,10 @@ export class MessageParser
         this._tokens.push(new Token(type, value));
     }
 
+    /**
+     * Peaks the next character of the source code.
+     * If we are at the end of our code, returns `undefined`.
+     */
     private peek()
     {
         if(this.isAtEnd())
@@ -117,6 +137,9 @@ export class MessageParser
         return this.source[this.current];
     }
 
+    /**
+     * Parses a quoted string.
+     */
     private quotedString()
     {
         while(this.peek() !== '"')
@@ -133,6 +156,9 @@ export class MessageParser
         this.addToken(TokenType.String, value);
     }
 
+    /**
+     * Parses an unquoted string.
+     */
     private string()
     {
         while(this.peek() !== ' ' && this.peek() !== undefined)
@@ -152,11 +178,18 @@ export interface IParsingOptions
     ChainLexeme  : string;
 }
 
+/**
+ * Common message interface.
+ * Used to facilitate testing without a `Discord.Message`.
+ */
 export interface MessageLike
 {
     cleanContent : string
 }
 
+/**
+ * Default parsing options.
+ */
 const defaultParsingOptions = {
     Indentifiers: ['!'],
     ChainLexeme: '>'
