@@ -12,6 +12,7 @@
   },
   "scripts": {
     "build": "./node_modules/.bin/tsc",
+    "clean-build": "rm -rf build && yarn run build",
     "start": "yarn run build && node build/main.js",
     "test": "yarn run build && node build/test/runTests.js"
   }
