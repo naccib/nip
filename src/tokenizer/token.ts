@@ -2,11 +2,7 @@
 /**
  * The possible values of a Token.
  */
-export type TokenValue = string 
-                | number 
-                | Array<string>
-                | Array<number>
-                | boolean;
+export type TokenValue = string;
 
 /**
  * The type of a Token.
