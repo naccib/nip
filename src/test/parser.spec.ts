@@ -1,6 +1,7 @@
 import { Expect, Test, TestFixture, TestCase } from "alsatian";
 
-import { Tokenizer, MessageLike, Token, TokenType, TokenValue } from '../tokenizer'
+import { Tokenizer, MessageLike, IParsingOptions  } from '../tokenizer/tokenizer';
+import { Token, TokenType, TokenValue } from '../tokenizer/token';
 
 /**
  * Helper function to create messages with a given content.
