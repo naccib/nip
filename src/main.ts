@@ -1,4 +1,4 @@
-import { MessageParser } from './parser/parser';
+import { Tokenizer } from './tokenizer';
 
 /**
  * Discord command parsing framework.
@@ -8,5 +8,5 @@ export namespace Nic
     /**
      * Main parser.
      */
-    type Parser = MessageParser;
+    type MessageTokenizer = Tokenizer;
 }

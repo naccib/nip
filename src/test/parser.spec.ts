@@ -1,7 +1,6 @@
 import { Expect, Test, TestFixture, TestCase } from "alsatian";
 
-import { MessageParser, MessageLike } from '../parser/parser';
-import { Token, TokenType } from '../parser/token';
+import { Tokenizer, MessageLike, Token, TokenType, TokenValue } from '../tokenizer'
 
 /**
  * Helper function to create messages with a given content.
@@ -27,7 +26,7 @@ export class ExampleTestFixture {
   @TestCase(createMessage(''))
   @TestCase(createMessage(' '))
   public invalidMessages(message: MessageLike) {    
-    Expect(() => new MessageParser(message)).toThrow();
+    Expect(() => new Tokenizer(message)).toThrow();
   }
 
   @Test("Test valid messages.")
@@ -35,6 +34,6 @@ export class ExampleTestFixture {
   @TestCase(createMessage('!parser'), [prefixToken, new Token(TokenType.String, 'parser')])
   @TestCase(createMessage('!big_command_name argument1 "argument 2" 92.2'), [prefixToken, stringToken('big_command_name'), stringToken('argument1'), stringToken('argument 2'), stringToken('92.2')])
   public validMessages(message: MessageLike, expected: Array<Token>) {    
-    Expect(new MessageParser(message).tokens).toEqual(expected);
+    Expect(new Tokenizer(message).tokens).toEqual(expected);
   }
 }
